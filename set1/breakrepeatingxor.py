@@ -1,9 +1,6 @@
 import array
 from hammingdistance import hamming_distance
-from utils import compose, letter_count
-
-def process_base64_file(fname):
-    return "".join(line for line in file(fname, 'r')).decode('base64')
+from utils import compose, letter_count, process_base64_file
 
 def xor_bytes(a1, a2):
     return array.array('B', [a^b for (a, b) in zip(a1, a2)])

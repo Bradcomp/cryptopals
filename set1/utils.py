@@ -2,6 +2,9 @@
 def compose(*args):
     return lambda x: reduce(lambda acc, f: f(acc), reversed(args), x)
 
+def process_base64_file(fname):
+    return "".join(line for line in file(fname, 'r')).decode('base64')
+
 def letter_count(s):
     letters = sorted(s.lower())
     init = [[letters[0]]]
