@@ -1,5 +1,5 @@
 from array import array
-from Crypto.Random import _UserFreindlyRNG as rng
+from Crypto.Random import _UserFriendlyRNG as rng
 
 def process_base64_file(fname):
     return array('B', "".join(line for line in file(fname, 'r')).decode('base64'))
