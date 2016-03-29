@@ -17,8 +17,8 @@ def encrypt_aes_cbc(key, iv, bytes):
         return array('B', [])
     block_size = len(iv)
     padded_bytes = pks_7(bytes, block_size)
-    current = encrypt_block(xor_bytes(iv, bytes[:block_size]), key)
-    return current + encrypt_aes_cbc(key, current, bytes[block_size:])
+    current = encrypt_block(xor_bytes(iv, padded_bytes[:block_size]), key)
+    return current + encrypt_aes_cbc(key, current, padded_bytes[block_size:])
 
 def decrypt_aes_cbc(key, iv, bytes):
     if len(bytes) == 0:
