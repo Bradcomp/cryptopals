@@ -23,7 +23,7 @@ class ECB_Detector(unittest.TestCase):
     def test_ecb_detection(self):
         always_ecb = make_black_box([encrypt_aes_ecb])
         always_cbc = make_black_box([encrypt_aes_cbc])
-        for i in range(100):
+        for _ in range(100):
             self.assertEqual(detector(always_ecb), 'ECB')
         for _ in range(100):
             self.assertEqual(detector(always_cbc), 'NOT ECB')

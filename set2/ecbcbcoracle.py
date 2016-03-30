@@ -3,7 +3,7 @@ from Crypto.Cipher import AES
 from pks7padding import pks_7
 from array import array
 from random import randint, choice
-from utils import random_bytes
+from utils import random_bytes, chunk
 
 def encrypt_aes_ecb(key, iv, bytes):
     padded_bytes = pks_7(array('B', bytes), 16)
@@ -21,9 +21,13 @@ def make_black_box(ciphers):
 
 encryption_oracle = make_black_box([encrypt_aes_ecb, encrypt_aes_cbc])
 
-def detector(black_box):
-    pt = array('B', 'A' * 48)
+def detector(black_box, block_size=16):
+    pt = array('B', 'A' * (block_size * 3))
     ct = black_box(pt)
-    if ct[16:32] == ct[32:48]:
-        return 'ECB'
+    chunks = chunk(block_size, ct)
+    nxt = chunks.next()
+    for block in chunks:
+        if len(block) and block == nxt:
+            return 'ECB'
+        nxt = block
     return 'NOT ECB'
